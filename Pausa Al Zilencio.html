@@ -1,0 +1,407 @@
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pausa Al Zilencio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #fef9f9, #fff0f5, #f3e5f5);
+      color: #333;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    .dark-mode {
+      background: #1e1e2f;
+      color: #f0f0f0;
+    }
+
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 5px;
+      background-color: #a18cd1;
+      width: 0%;
+      z-index: 999;
+    }
+
+    #menu-toggle { display: none; }
+
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 240px;
+      height: 100%;
+      background: linear-gradient(to bottom, #dcd6f7, #a6c1ee);
+      padding-top: 60px;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      z-index: 998;
+    }
+
+    #sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #sidebar ul li {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    #sidebar ul li a {
+      text-decoration: none;
+      color: #6a5acd;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+
+    #sidebar ul li a:hover,
+    #sidebar ul li a.active {
+      color: #ff69b4;
+      background-color: #f3e5f5;
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+
+    header {
+      margin-left: 240px;
+      padding: 40px;
+      background-color: #ffffffcc;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    header h1 {
+      font-size: 40px;
+      color: #6a5acd;
+      margin: 0;
+    }
+
+    header h2 {
+      font-size: 24px;
+      color: #a18cd1;
+      margin-top: 10px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .buttons button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 10px;
+      background-color: #d9b8ff;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .buttons button:hover {
+      background-color: #a18cd1;
+    }
+
+    main {
+      margin-left: 240px;
+      padding: 40px;
+    }
+
+    section {
+      padding: 60px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    h2 {
+      color: #a18cd1;
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+
+    p, ul li {
+      font-size: 20px;
+      line-height: 1.8;
+    }
+
+    ul { padding-left: 20px; }
+
+    img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 20px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .comentarios {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 50px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .comentarios textarea {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: none;
+      font-size: 15px;
+      height: 110px;
+    }
+
+    .comentarios button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #a18cd1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: not-allowed;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-left: 240px;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #999;
+    }
+
+    .motivador {
+      background-color: #f3e5f5;
+      color: #6a5acd;
+      font-size: 18px;
+      margin-top: 30px;
+      padding: 15px;
+      border-left: 5px solid #a18cd1;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="progress-bar"></div>
+
+  <nav id="sidebar">
+    <ul>
+      <li><a href="#inicio" class="nav-link">Inicio</a></li>
+      <li><a href="#que-es" class="nav-link">¿Qué es?</a></li>
+      <li><a href="#problemas" class="nav-link">Problemas comunes</a></li>
+      <li><a href="#causas" class="nav-link">Causas</a></li>
+      <li><a href="#efectos" class="nav-link">Efectos</a></li>
+      <li><a href="#ayuda" class="nav-link">Pedir ayuda</a></li>
+      <li><a href="#conclusion" class="nav-link">Conclusión</a></li>
+      <li><a href="#fuentes" class="nav-link">Fuentes</a></li>
+      <li><a href="#comentarios" class="nav-link">Comentarios</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>Pausa Al Zilencio</h1>
+    <h2>La salud mental de los adolescentes</h2>
+    <div class="buttons">
+      <button onclick="toggleMusic()">🎵 Música</button>
+      <button onclick="toggleDarkMode()">🌓 Modo oscuro</button>
+    </div>
+    <div id="motivador" class="motivador">✨ Tú importas y mereces estar bien.</div>
+  </header>
+
+  <main>
+     <!-- Inicio -->
+<section id="inicio">
+  <h2>1. Inicio</h2>
+  <p>¡Hola! Bienvenid@ a esta página sobre salud mental en adolescentes. ✨
+
+  Mira, la adolescencia es como una montaña rusa: un día estás feliz, al día siguiente triste, luego todo te estresa y después te da risa. A veces ni tú mism@ sabes qué te pasa ni te comprendes, pero tranqui, no estás loc@ ni eres rar@, simplemente estás creciendo, aprendiendo y pasando por un montón de cambios, y todo esto que sientes es parte del proceso, ahora lo sientes como que es lo peor que te esta pasando o a veces lo mejor, pero todo pronto pasara porque es solo una etapa.
+
+  En esta web vas a entender mejor qué es la salud mental, por qué a veces te sientes rar@ o confundid@, qué significa todo eso que pasa por tu mente y qué hacer cuando te sientes así.
+
+  La idea es que no te sientas sol@ con lo que te pasa. A veces uno siente que nadie lo entiende, pero créeme: que si, asi que por eso este espacio es para ti. 💬🧠</p>
+  <img src="https://images.pexels.com/photos/1756170/pexels-photo-1756170.jpeg" alt="Adolescente feliz">
+</section>
+
+<section id="que-es">
+  <h2>🟣 2. ¿Qué es la salud mental?</h2>
+  <p>La salud mental no es estar feliz todo el tiempo ni vivir sin problemas, ¡Obvio que no! no todo es color de rosas, es más bien cómo te sientes por dentro, cómo piensas, cómo manejas tus emociones y cómo te llevas con las demás personas.
+
+  Cuidar tu salud mental es tan importante como cuidar tu cuerpo. Si te duele la cabeza, descansas o tomas algo, ¿cierto? Pues si te sientes triste, nervios@, frustrad@ o confundid@, también mereces tener un tiempo para relajarte. ❤️
+
+  Sentirte mal no significa que estás fallando, solo significa que eres human@ y que algo dentro de ti necesita atención y cariño. Y no es necesario que seas una carga por sentirte así. 💖🧘‍♀️
+
+  Recuerda: está bien no estar bien todo el tiempo.</p>
+  <img src="https://images.pexels.com/photos/3958421/pexels-photo-3958421.jpeg" alt="Reflexión emocional">
+</section>
+
+<section id="problemas">
+  <h2>🟣 3. Problemas que más vivimos los adolescentes</h2>
+  <p>A esta edad, muchas cosas cambian y se sienten intensas, hay muchos cambios como hormonales y físicos y si a veces ni tú mism@ sabes por qué te sientes triste de la nada, por qué algo te molesta tanto, o por qué de pronto todo te abruma. Es como si cargaras una mochila invisible todo el tiempo, llena de pensamientos y sentimientos inexplicables.</p>
+
+  <p>Te cuento algunos de los problemas más comunes (aunque muchos nunca lo admitan):</p>
+  <ul>
+    <li><strong>Ansiedad:</strong> Sientes que todo y todos se te viene encima. Tu mente no para de pensar en lo que puede pasar o en lo que hiciste mal y pudiste haber cambiado, hasta las cosas pequeñas se sienten gigantes. Es como estar en modo alerta todo el día.</li>
+    <li><strong>Depresión:</strong> Es una tristeza extrema que no se va, dejas de disfrutar las cosas, todo te da igual, y a veces piensas que si desaparecieras, no sentirian mi ausencia ni me extrañarian, que sientas eso es algo comun en muchos adolescente. Y eso da miedo… pero también mucha pena.</li>
+    <li><strong>Baja autoestima:</strong> Te criticas a cada rato. “No soy suficiente”, “ella es mejor que yo”, “yo no soy tan interesante”, “no entiendo por qué no me eligen”. Te comparas, te juzgas, y terminas creyendo que vales menos que los demás.</li>
+    <li><strong>Trastornos alimenticios:</strong> dejas de comer o comes por ansiedad. No porque tengas hambre, sino porque hay algo dentro que no sabes cómo calmar. A veces no se trata del cuerpo, sino de cómo te ves… o de cuánto crees que vales, hay veces que te sientes subida de peso y evitas comer, como otras veces que te sientes muy delgada o tienes muchas cosas en mente y lo unico que haces es comer, pero todas estas acciones tienen consecuencias y graves.</li>
+    <li><strong>Autolesiones o pensamientos tristes extremos:</strong> Sientes que nadie nota como te sientes, pero hay días en los que es un dolor indescriptible el que sientes y es tan fuerte que piensas cosas terribles, como si lastimarte fuera la única forma de soltar lo que llevas dentro, pero no estás sol@, hay formas sanas de salir de ahí, aunque en algunas ocasiones muchas no tuvieron el tiempo de hablar con alguien o de desahogarse y tomaron las decisiones más drasticas y lamentablemente por estas razones han habido muerte de muchas adolescentes.</li>
+  </ul>
+  <p>Y sí, muchas veces te tragas todo eso. Haces como si nada. Te pones tu mejor sonrisa y sigues. Pero por dentro te estás rompiendo. Así que si te sientes así, no lo minimices, hablarlo solucionara todo.</p>
+  <img src="https://images.pexels.com/photos/32533363/pexels-photo-32533363.jpeg" alt="Adolescente depresivo">
+</section>
+
+<section id="causas">
+  <h2>🟣 4. ¿Por qué pasa todo esto?</h2>
+  <p>No es que un día te levantas y ya estás mal. A veces son muchas pequeñas cosas que se van acumulando: palabras que te dijeron, comparaciones que hiciste, silencios que dolieron, miradas que ignoraron. Y llega un punto donde te rompes, sin saber en qué momento empezó todo.</p>
+
+  <ul>
+    <li><strong>Presión del cole:</strong> Cuando se te acumulan exámenes, tareas, notas, que los profes esperen mucho de ti, que tus papás te comparen con todos el mundo, eso agota y estresa. A veces parece que si no sacas buena nota, ya vales menos, y no es así, solo es cuestión de .</li>
+    <li><strong>Redes sociales:</strong> ves a esa chica perfecta, con su carita linda, su cuerpazo, su novio, su grupo de amigos y piensas: “yo no soy así”. Y aunque sabes que muchas cosas son actuadas, igual te duele. Igual te comparas. Igual te sientes chiquita.</li>
+    <li><strong>Problemas en casa:</strong> peleas, gritos, falta de cariño o que nadie te escuche. Si tu casa no es un lugar seguro, es normal que te sientas bajonead@ o confundid@.</li>
+    <li><strong>Amores y amistades:</strong> te esfuerzas por gustarle a alguien, te ilusionas, haces cosas lindas… y al final no te elige. Elige a otra. A una que parece todo lo que tú no eres. Y aunque digas “todo bien”, por dentro se te rompe algo.</li>
+    <li><strong>Bullying:</strong> que te molesten, se rían de ti o te dejen de lado en el cole. Eso duele muchísimo y afecta cómo te ves a ti mism@.</li>
+    <li><strong>Hormonas locas:</strong> sí, literal. En la adolescencia las hormonas están full activas y eso hace que tengas cambios de humor rarísimos sin razón. Un minuto feliz, al otro llorando. NORMAL.</li>
+    <li><strong>Expectativas:</strong> sentir que debes ser el/la hij@ perfect@, sacar buenas notas, ser flac@, popular, “cool” o “exit@s@”... es demasiado. Y cuando sientes que no llegas, te frustras. A veces incluso piensas que decepcionas a todos, o a ti mism@.</li>
+  </ul>
+  <p>🎯 Todo esto te afecta, incluso si lo escondes. Incluso si nadie lo ve. Pero que nadie lo note no significa que no duela.</p>
+  <img src="https://images.pexels.com/photos/7683901/pexels-photo-7683901.jpeg" alt="Chico dormido con libros">
+</section>
+
+<section id="efectos">
+  <h2>🟣 5. ¿Cómo afecta en tu día a día?</h2>
+  <ul>
+    <li>Te vas apagando de a poquitos. Y nadie se da cuenta. Sigues respondiendo, sigues riendo, sigues yendo al cole… pero te sientes ausente. Como si no estuvieras del todo ahí.</li>
+    <li>Ya no rindes igual en el cole porque no puedes concentrarte. Estás como en modo zombie.</li>
+    <li>Duermes demasiado o no puedes dormir nada. Tu cabeza no para de pensar o te sientes sin energía todo el día.</li>
+    <li>Comes mucho por ansiedad o dejas de comer porque no tienes ganas. O simplemente te da igual.</li>
+    <li>Te alejas de tus amigos, o te molesta todo lo que hacen. Te sientes raro hasta con la gente que quieres.</li>
+    <li>Te deja de gustar lo que antes te emocionaba: jugar, dibujar, salir, ver series. Todo te da flojera o no tiene sentido.</li>
+    <li>Te miras al espejo y ves todos tus “defectos”. No ves lo bonita que eres, solo lo que te falta. Y te comparas con esa otra chica que parece tener todo lo que tú no.</li>
+    <li>Empiezas a pensar que si te fueras, nadie lo notaría. Que das todo por personas que ni siquiera lo valoran. Que siempre das más de lo que recibes.</li>
+    <li><strong>Y lo peor:</strong> a veces sientes que nadie te entiende. Pero créeme, sí hay formas de mejorar.</li>
+  </ul>
+  <img src="https://images.pexels.com/photos/6147127/pexels-photo-6147127.jpeg" alt="chico alejandose de sus amigos">
+</section>
+
+<section id="ayuda">
+  <h2>🟣 6. ¿Cómo pedir ayuda?</h2>
+  <p>💪 Sé que cuesta decir lo que sientes. A veces piensas “me van a decir exagerad@”, “no quiero preocupar a nadie”, o “mejor me aguanto”. Incluso a veces pensamos que no merecemos apoyo. Pero no. Guardarte todo eso solo te hace más daño.</p>
+  <p>Te juro que pedir ayuda no es un signo de debilidad. Al contrario. Es el acto más fuerte que puedes hacer cuando sientes que ya no puedes más.</p>
+  <p>Y sí, sé que da miedo. Que te hace sentir vulnerable. Pero no naciste para cargar sola con todo eso. No naciste para conformarte con migajas de cariño ni para sentir que tienes que cambiar para ser amada.</p>
+  <p>Puedes hablar con un psicólog@, con tus papás, un profe buena onda o hasta con un amigo/a. Lo importante es no quedarte callad@.
+  También puedes escribir lo que sientes en un cuaderno, hacer dibujos, bailar, caminar, escuchar música tranquila o lo que te haga sentir un poco mejor.</p>
+  <p>Y si no tienes a nadie cerca en ese momento, hay líneas de ayuda por WhatsApp, teléfono o incluso chats anónimos donde puedes contar lo que sientes sin miedo.</p>
+  <p>💬 Lo repito: NO estás sol@. Y sí hay gente que te puede ayudar.</p>
+  <img src="https://images.pexels.com/photos/4100419/pexels-photo-4100419.jpeg" alt="Adolescente con psicologo">
+</section>
+
+<section id="conclusion">
+  <h2>🟣 7. Conclusión</h2>
+  <p>La salud mental importa. Y aunque a veces parezca un tema complicado o que nadie entiende, tú no estás sol@.</p>
+  <p>💜 Tú no eres menos por sentir. No eres débil por llorar. No eres invisible solo porque alguien no te supo ver.</p>
+  <p>Tú vales. Incluso cuando te sientes rota. Incluso cuando nadie lo dice. Incluso cuando piensas que no estás brillando… ahí también vales.</p>
+  <p>🌻 Este mundo necesita tu forma de ver la vida, tu risa, tus ideas, tu sensibilidad. Así que no te apagues por quienes no supieron cuidarte.</p>
+  <p>Cuidarte tú también es una forma de resistir. Porque tú mereces lo mismo que das: amor, paciencia y un lugar seguro para ser.</p>
+  <img src="https://images.pexels.com/photos/7692763/pexels-photo-7692763.jpeg" alt="adolescente sonriendo">
+</section>
+
+     <!-- Artículo especial -->
+     <section style="background-color: #fff5fc; border-left: 6px solid #fbc2eb; padding: 30px; margin-bottom: 40px; border-radius: 10px;">
+       <h2 style="font-size: 28px; color: #d46bcb;">Artículo especial: "Pausa al Zilencio"</h2>
+       <p style="font-size: 18px;">Este artículo busca ayudar a adolescentes a entender su salud mental, conocer causas, efectos y cómo pedir ayuda, con un lenguaje real, cálido y súper cercano. 💬</p>
+     </section>
+
+     <!-- Fuentes -->
+     <section id="fuentes">
+       <h2>📚 8. Fuentes</h2>
+       <ul style="font-size: 18px;">
+         <li>Unicef (2022). <i>Salud mental en adolescentes.</i></li>
+         <li>OMS (2023). <i>Adolescent Mental Health.</i></li>
+         <li>BBC Mundo (2023). Artículos sobre salud emocional juvenil.</li>
+       </ul>
+     </section>
+
+     <!-- Comentarios -->
+     <section id="comentarios">
+       <h2>💬 9. Comentarios</h2>
+       <div style="background-color: #f2f2f2; border-radius: 10px; padding: 20px; margin-top: 10px;">
+         <p><strong>✨ Andrea:</strong> Me encantó esta web, sentí que alguien me entendía por fin 🥹💜</p>
+       </div>
+       <div style="background-color: #f2f2f2; border-radius: 10px; padding: 20px; margin-top: 10px;">
+         <p><strong>✨ Diego:</strong> Ojalá el cole hablara más de esto. Me sentí muy identificado.</p>
+       </div>
+       
+       <textarea placeholder="Escribe tu comentario aquí"></textarea>
+       <button disabled>Enviar</button>
+     </section>
+    </main>
+
+      <footer>
+        © 2025 Pausa Al Zilencio — hecho con 💜 por Lu
+      </footer>
+
+      <audio id="background-music" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_b4cb94f49e.mp3?filename=calm-relaxing-music-11766.mp3" type="audio/mpeg">
+        Tu navegador no soporta música.
+      </audio>
+
+      <script>
+        const progressBar = document.getElementById("progress-bar");
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+        const audio = document.getElementById("background-music");
+        const motivador = document.getElementById("motivador");
+        let frases = [
+          "✨ Tú importas y mereces estar bien.",
+          "💖 No estás sol@, siempre hay una salida.",
+          "🌈 Lo estás haciendo mejor de lo que crees.",
+          "🧠 Tu mente también merece cuidados.",
+          "💜 Hablar es sanar. No te calles."
+        ];
+
+        window.onscroll = function () {
+          let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+          let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          let scrolled = (winScroll / height) * 100;
+          progressBar.style.width = scrolled + "%";
+
+          let current = "";
+          sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            if (scrollY >= sectionTop) {
+              current = section.getAttribute("id");
+            }
+          });
+
+          navLinks.forEach(link => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + current) {
+              link.classList.add("active");
+            }
+          });
+        };
+
+        function toggleMusic() {
+          if (audio.paused) {
+            audio.play();
+          } else {
+            audio.pause();
+          }
+        }
+
+        function toggleDarkMode() {
+          document.body.classList.toggle("dark-mode");
+        }
+
+        setInterval(() => {
+          let random = frases[Math.floor(Math.random() * frases.length)];
+          motivador.textContent = random;
+        }, 6000);
+      </script>
+    </body>
+    </html>
